@@ -1,22 +1,23 @@
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
-import TaskLists from "../components/taskList/TaskList";
-import { TaskList } from "../interfaces/ TaskList.interface";
-import { RootState, useAppDispatch } from "../redux/store";
+import { useParams } from "react-router-dom";
+import TaskLists from "../../components/taskList/TaskList";
+import { TaskList } from "../../interfaces/ TaskList.interface";
+import { RootState, useAppDispatch } from "../../redux/store";
 import {
   addTaskList,
   fetchTaskLists,
-} from "../redux/taskList/ taskListAsyncThunk";
+} from "../../redux/taskList/ taskListAsyncThunk";
 import {
   selectTaskLists,
   selectTaskListsError,
   selectTaskListsLoading,
-} from "../redux/taskList/taskListSelectors";
-import { fetchTasks } from "../redux/tasks/taskAsyncThunk";
-import styles from "./Home.module.scss";
+} from "../../redux/taskList/taskListSelectors";
+import { fetchTasks } from "../../redux/tasks/taskAsyncThunk";
 
-const HomePage: React.FC = () => {
+const BoardPage: React.FC = () => {
   const dispatch = useAppDispatch();
+  const { id } = useParams();
   const taskLists = useSelector(selectTaskLists);
   const tasks = useSelector((state: RootState) => state.tasks.tasks);
 
@@ -51,12 +52,10 @@ const HomePage: React.FC = () => {
   };
 
   return (
-    <div className={styles.pageContainer}>
-      <div className={styles.head}>
-        <h1 className={styles.title}>My Task Board</h1>
-        <button className={styles.addListBtn} onClick={handleAddNewList}>
-          + Create new list
-        </button>
+    <div>
+      <div>
+        <h1>My Task Board</h1>
+        <button onClick={handleAddNewList}>+ Create new list</button>
       </div>
 
       <TaskLists
@@ -69,4 +68,4 @@ const HomePage: React.FC = () => {
   );
 };
 
-export default HomePage;
+export default BoardPage;
