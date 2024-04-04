@@ -1,6 +1,14 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Task } from '../../tasks/entities/task.entity';
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToMany,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
+import { TaskBoard } from 'src/task-board/entities/task-board.entity';
 
 @Entity()
 export class TaskList {
@@ -16,6 +24,17 @@ export class TaskList {
   @ApiProperty()
   position: number;
 
+  @OneToMany(() => Task, (task) => task.column, { cascade: true })
+  @ApiProperty()
+  task: Task[];
+
+  @ManyToOne(() => TaskBoard, (taskBoard) => taskBoard.column, {
+    cascade: true,
+  })
+  @JoinColumn({ name: 'board_id' })
+  @ApiProperty()
+  board: TaskBoard;
+
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   @ApiProperty()
   created_at: Date;
@@ -23,8 +42,4 @@ export class TaskList {
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   @ApiProperty()
   updated_at: Date;
-
-  @OneToMany(() => Task, (task) => task.column, { cascade: true })
-  @ApiProperty()
-  task: Task[];
 }

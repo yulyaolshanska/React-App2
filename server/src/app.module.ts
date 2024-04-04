@@ -6,6 +6,7 @@ import { TaskListModule } from './task-list/task-list.module';
 import { config as dotenvConfig } from 'dotenv';
 import { TaskHistoryModule } from './task-history/task-history.module';
 import { TaskModule } from './tasks/tasks.module';
+import { TaskBoardModule } from './task-board/task-board.module';
 
 dotenvConfig({ path: '.env' });
 
@@ -25,6 +26,7 @@ dotenvConfig({ path: '.env' });
     TaskListModule,
     TaskModule,
     TaskHistoryModule,
+    TaskBoardModule,
   ],
   controllers: [AppController],
   providers: [AppService],

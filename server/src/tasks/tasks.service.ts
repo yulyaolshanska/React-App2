@@ -16,11 +16,10 @@ export class TaskService {
     private readonly taskRepository: Repository<Task>,
     @InjectRepository(TaskList)
     private readonly taskListRepository: Repository<TaskList>,
+    private readonly taskListService: TaskListService,
     @InjectRepository(TaskHistory)
     private readonly taskHistoryRepository: Repository<TaskHistory>,
-
     private readonly taskHistoryService: TaskHistoryService,
-    private readonly taskListService: TaskListService,
   ) {}
 
   async createTask(createTaskDto: CreateTaskDto): Promise<Task> {
