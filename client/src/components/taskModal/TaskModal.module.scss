@@ -39,12 +39,6 @@
   justify-content: center;
 }
 
-.historyContainer {
-  width: 40%;
-  padding: 20px;
-  background-color: #7e7c7c57;
-}
-
 .editTaskBtn {
   border: 1px solid grey;
   border-radius: 5px;
@@ -145,6 +139,12 @@
 
 .error {
   border-color: red;
+}
+
+.historyContainer {
+  width: 40%;
+  padding: 20px;
+  background-color: #7e7c7c57;
 }
 
 .historyList {
