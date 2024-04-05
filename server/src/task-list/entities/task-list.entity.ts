@@ -28,9 +28,7 @@ export class TaskList {
   @ApiProperty()
   task: Task[];
 
-  @ManyToOne(() => TaskBoard, (taskBoard) => taskBoard.column, {
-    cascade: true,
-  })
+  @ManyToOne(() => TaskBoard, (taskBoard) => taskBoard.column)
   @JoinColumn({ name: 'board_id' })
   @ApiProperty()
   board: TaskBoard;

@@ -4,12 +4,17 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { TaskBoard } from './entities/task-board.entity';
 import { CreateTaskBoardDto } from './dto/create-task-board.dto';
 import { UpdateTaskBoardDto } from './dto/update-task-board.dto';
+import { TaskList } from 'src/task-list/entities/task-list.entity';
+import { TaskListService } from 'src/task-list/task-list.services';
 
 @Injectable()
 export class TaskBoardService {
   constructor(
     @InjectRepository(TaskBoard)
     private taskBoardRepository: Repository<TaskBoard>,
+    @InjectRepository(TaskList)
+    private taskListRepository: Repository<TaskList>,
+    private readonly taskListService: TaskListService,
   ) {}
   async create(createTaskBoardDto: CreateTaskBoardDto) {
     const newBoard = this.taskBoardRepository.create({ ...createTaskBoardDto });
@@ -19,35 +24,57 @@ export class TaskBoardService {
   }
 
   findAll() {
-    return this.taskBoardRepository.find();
+    return this.taskBoardRepository.find({
+      relations: ['column'],
+    });
   }
 
   findOne(id: number) {
     return;
   }
 
-  async update(id: number, updateTaskBoardDto: UpdateTaskBoardDto) {
-    let existboard = await this.taskBoardRepository.findOne({
-      where: { id },
-    });
+  async update(
+    id: number,
+    updateTaskBoardDto: UpdateTaskBoardDto,
+  ): Promise<TaskBoard> {
+    try {
+      const board = await this.taskBoardRepository.findOne({
+        where: { id },
+      });
 
-    if (!existboard) {
-      throw new Error(`Board with ID ${id} not found`);
+      if (!board) {
+        throw new Error(`Board with ID ${id} not found`);
+      }
+
+      if (
+        updateTaskBoardDto.title !== undefined &&
+        updateTaskBoardDto.title !== board.title
+      ) {
+        Object.assign(board, updateTaskBoardDto);
+
+        const updatedBoard = await this.taskBoardRepository.save(board);
+
+        return updatedBoard;
+      } else {
+        return board;
+      }
+    } catch (error) {
+      console.error('Error updating task board:', error);
+      throw new Error('Failed to update task board');
     }
-
-    if (
-      updateTaskBoardDto.title !== undefined &&
-      updateTaskBoardDto.title !== existboard.title
-    ) {
-    }
-
-    await this.taskBoardRepository.save({
-      ...existboard,
-      title: updateTaskBoardDto.title,
-    });
   }
 
   async remove(id: number) {
+    const taskBoard = await this.taskBoardRepository.findOne({
+      where: { id },
+      relations: ['column'],
+    });
+
+    if (taskBoard) {
+      for (const taskList of taskBoard.column) {
+        await this.taskListService.removeTaskList(taskList.id);
+      }
+    }
     await this.taskBoardRepository.delete(id);
   }
 }

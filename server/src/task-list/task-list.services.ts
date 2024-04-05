@@ -27,14 +27,12 @@ export class TaskListService {
     const allTaskLists = await this.taskListRepository.find();
     let targetPos = allTaskLists.length > 0 ? allTaskLists.length + 1 : 1;
 
-    //
     const taskBoard = await this.boardRepository.findOne({
       where: { id: createTaskListDto.board_id },
     });
     if (!taskBoard) {
       throw new Error(`Board with ID ${createTaskListDto.board_id} not found`);
     }
-    console.log(taskBoard);
 
     const newList = this.taskListRepository.create({
       ...createTaskListDto,
@@ -43,16 +41,14 @@ export class TaskListService {
     });
 
     const savedList = await this.taskListRepository.save(newList);
-    console.log(savedList);
+
     return savedList;
-    //
   }
 
   async findAllByBoardId(id: number) {
     return this.boardRepository
-      .findOne({ relations: ['column'], where: { id: id } })
+      .findOne({ relations: ['column'], where: { id } })
       .then((board: TaskBoard) => {
-        console.log('board.column', board.column);
         return board.column;
       });
   }

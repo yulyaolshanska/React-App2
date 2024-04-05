@@ -12,7 +12,7 @@ export class TaskBoard {
   @ApiProperty()
   title: string;
 
-  @OneToMany(() => TaskList, (column) => column.board)
+  @OneToMany(() => TaskList, (column) => column.board, { cascade: true })
   @ApiProperty()
   column: TaskList[];
 }
