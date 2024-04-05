@@ -46,11 +46,15 @@ export class TaskListService {
   }
 
   async findAllByBoardId(id: number) {
-    return this.boardRepository
-      .findOne({ relations: ['column'], where: { id } })
-      .then((board: TaskBoard) => {
-        return board.column;
-      });
+    const board = await this.boardRepository.findOne({
+      relations: ['column'],
+      where: { id },
+    });
+    const taskLists = await this.taskListRepository.find({
+      where: { board: { id: board.id } },
+      relations: ['task', 'board'],
+    });
+    return taskLists;
   }
 
   async getAllTaskLists(): Promise<TaskList[]> {
