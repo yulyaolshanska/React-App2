@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import TaskLists from "../../components/taskList/TaskList";
 import { TaskList } from "../../interfaces/ TaskList.interface";
 import { RootState, useAppDispatch } from "../../redux/store";
 import {
   addTaskList,
-  fetchTaskLists,
+  getTaskListsByBoardId,
 } from "../../redux/taskList/ taskListAsyncThunk";
 import {
   selectTaskLists,
@@ -27,7 +27,9 @@ const BoardPage: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        await dispatch(fetchTaskLists());
+        if (id) {
+          await dispatch(getTaskListsByBoardId(+id));
+        }
         await dispatch(fetchTasks());
       } catch (error) {
         console.error("Error fetching :", error);
@@ -43,16 +45,20 @@ const BoardPage: React.FC = () => {
     const newTaskList: TaskList = {
       id: newId,
       title: "New List",
-      created_at: new Date(),
-      updated_at: new Date(),
       position: taskLists.length > 0 ? taskLists.length + 1 : 1,
       task: [],
+      board_id: id ? +id : 1,
+      created_at: new Date(),
+      updated_at: new Date(),
     };
     dispatch(addTaskList(newTaskList));
   };
 
   return (
     <div>
+      <Link to="http://localhost:3000/">
+        <h2>All Boards</h2>
+      </Link>
       <div>
         <h1>My Task Board</h1>
         <button onClick={handleAddNewList}>+ Create new list</button>
