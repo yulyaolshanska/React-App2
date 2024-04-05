@@ -3,7 +3,7 @@ import { TaskList } from "../../interfaces/ TaskList.interface";
 import {
   addTaskList,
   deleteTaskList,
-  fetchTaskLists,
+  getTaskListsByBoardId,
   updateTaskList,
 } from "./ taskListAsyncThunk";
 
@@ -25,15 +25,15 @@ const taskListSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchTaskLists.pending, (state) => {
+      .addCase(getTaskListsByBoardId.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(fetchTaskLists.fulfilled, (state, action) => {
+      .addCase(getTaskListsByBoardId.fulfilled, (state, action) => {
         state.loading = false;
         state.taskLists = action.payload;
       })
-      .addCase(fetchTaskLists.rejected, (state, action) => {
+      .addCase(getTaskListsByBoardId.rejected, (state, action) => {
         state.loading = false;
         state.error =
           action.error.message ?? "An error occurred while fetching task lists";
