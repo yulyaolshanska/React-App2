@@ -9,6 +9,7 @@ import {
 import { deleteTask } from "../../redux/tasks/taskAsyncThunk";
 import AddTaskForm from "../addTaskForm/AddTaskForm";
 import DropDown from "../dropDown/DropDown";
+import EditableTitle from "../editableTitle/EditableTitle";
 import TaskCard from "../taskCard/TaskCard";
 import TaskModal from "../taskModal/TaskModal";
 import styles from "./TaskLists.module.scss";
@@ -27,31 +28,21 @@ const TaskLists: React.FC<TaskListProps> = ({
   error,
 }) => {
   const dispatch = useAppDispatch();
-  const inputRef = useRef<HTMLInputElement>(null);
   const addModalRef = useRef<HTMLDivElement>(null);
   const editModalRef = useRef<HTMLDivElement>(null);
-  const [activeTitleInput, setActiveTitleInput] = useState<number | null>(null);
-  const [editedTitle, setEditedTitle] = useState<string>("");
   const [isOpenAddModal, setIsOpenAddModal] = useState<boolean>(false);
+  const [activeTitleInput, setActiveTitleInput] = useState<number | null>(null);
   const [isOpenEditModal, setIsOpenEditModal] = useState<boolean>(false);
   const [taskForEdit, setTaskForEdit] = useState<Task | null>(null);
   const [activeListId, setActiveListId] = useState<number | undefined>(
     taskLists.length > 0 ? taskLists[0].id : undefined
   );
 
-  const handleListTitleChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ): void => {
-    setEditedTitle(event.target.value);
-  };
-
   const handleListTitleSave = (id: number, newTitle: string): void => {
-    if (editedTitle) {
-      setActiveTitleInput(id);
+    if (newTitle) {
       dispatch(updateTaskList({ id, newTitle }));
+      setActiveTitleInput(null);
     }
-    setEditedTitle("");
-    setActiveTitleInput(null);
   };
 
   const handleDeleteTaskList = (id: number): void => {
@@ -102,16 +93,6 @@ const TaskLists: React.FC<TaskListProps> = ({
     }
   };
 
-  const handleKeyPress = (
-    event: React.KeyboardEvent<HTMLInputElement>,
-    id: number
-  ) => {
-    if (event.key === "Enter") {
-      event.preventDefault();
-      handleListTitleSave(id, editedTitle);
-    }
-  };
-
   useEffect(() => {
     if (isOpenAddModal || isOpenEditModal) {
       document.addEventListener("mousedown", handleOutsideClick);
@@ -142,22 +123,11 @@ const TaskLists: React.FC<TaskListProps> = ({
             .map((taskList) => (
               <li key={taskList.id}>
                 <div className={styles.listTitleContainer}>
-                  <input
-                    id={`input-${taskList.id}`}
-                    name="title"
-                    value={
-                      activeTitleInput === taskList.id
-                        ? editedTitle
-                        : taskList.title
-                    }
-                    className={`${styles.listTitleInput} ${
-                      activeTitleInput === taskList.id ? styles.activeInput : ""
-                    }`}
-                    onClick={() => setActiveTitleInput(taskList.id)}
-                    onBlur={() => handleListTitleSave(taskList.id, editedTitle)}
-                    onChange={handleListTitleChange}
-                    onKeyPress={(e) => handleKeyPress(e, taskList.id)}
-                    ref={inputRef}
+                  <EditableTitle
+                    isActive={activeTitleInput === taskList.id}
+                    onSave={handleListTitleSave}
+                    id={taskList.id}
+                    initialValue={taskList.title}
                   />
                   {taskList?.task && (
                     <p className={styles.taskCounter}>
@@ -188,7 +158,6 @@ const TaskLists: React.FC<TaskListProps> = ({
                     isOpen={isOpenAddModal}
                   />
                 )}
-
                 {tasks &&
                   tasks
                     .filter((t: Task) => t?.column?.id === taskList.id)
