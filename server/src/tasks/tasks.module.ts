@@ -1,5 +1,6 @@
 import { forwardRef, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { TaskBoardModule } from 'src/task-board/task-board.module';
 import { TaskHistoryModule } from '../task-history/task-history.module';
 import { TaskHistoryService } from '../task-history/task-history.service';
 import { TaskListModule } from '../task-list/task-list.module';
@@ -13,6 +14,7 @@ import { TaskService } from './tasks.service';
     TypeOrmModule.forFeature([Task]),
     forwardRef(() => TaskHistoryModule),
     forwardRef(() => TaskListModule),
+    forwardRef(() => TaskBoardModule),
   ],
   exports: [TypeOrmModule],
   controllers: [TaskController],

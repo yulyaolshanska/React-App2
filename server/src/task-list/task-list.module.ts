@@ -5,12 +5,14 @@ import { TaskListController } from './task-list.controller';
 import { TaskListService } from './task-list.services';
 import { TaskModule } from '../tasks/tasks.module';
 import { TaskHistoryModule } from '../task-history/task-history.module';
+import { TaskBoardModule } from 'src/task-board/task-board.module';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([TaskList]),
     forwardRef(() => TaskModule),
     forwardRef(() => TaskHistoryModule),
+    forwardRef(() => TaskBoardModule),
   ],
   exports: [TypeOrmModule],
   controllers: [TaskListController],

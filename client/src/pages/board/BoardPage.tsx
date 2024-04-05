@@ -1,22 +1,23 @@
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
-import TaskLists from "../components/taskList/TaskList";
-import { TaskList } from "../interfaces/ TaskList.interface";
-import { RootState, useAppDispatch } from "../redux/store";
+import { Link, useParams } from "react-router-dom";
+import TaskLists from "../../components/taskList/TaskList";
+import { TaskList } from "../../interfaces/ TaskList.interface";
+import { RootState, useAppDispatch } from "../../redux/store";
 import {
   addTaskList,
-  fetchTaskLists,
-} from "../redux/taskList/ taskListAsyncThunk";
+  getTaskListsByBoardId,
+} from "../../redux/taskList/ taskListAsyncThunk";
 import {
   selectTaskLists,
   selectTaskListsError,
   selectTaskListsLoading,
-} from "../redux/taskList/taskListSelectors";
-import { fetchTasks } from "../redux/tasks/taskAsyncThunk";
-import styles from "./Home.module.scss";
+} from "../../redux/taskList/taskListSelectors";
+import { fetchTasks } from "../../redux/tasks/taskAsyncThunk";
 
-const HomePage: React.FC = () => {
+const BoardPage: React.FC = () => {
   const dispatch = useAppDispatch();
+  const { id } = useParams();
   const taskLists = useSelector(selectTaskLists);
   const tasks = useSelector((state: RootState) => state.tasks.tasks);
 
@@ -26,7 +27,9 @@ const HomePage: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        await dispatch(fetchTaskLists());
+        if (id) {
+          await dispatch(getTaskListsByBoardId(+id));
+        }
         await dispatch(fetchTasks());
       } catch (error) {
         console.error("Error fetching :", error);
@@ -42,21 +45,23 @@ const HomePage: React.FC = () => {
     const newTaskList: TaskList = {
       id: newId,
       title: "New List",
-      created_at: new Date(),
-      updated_at: new Date(),
       position: taskLists.length > 0 ? taskLists.length + 1 : 1,
       task: [],
+      board_id: id ? +id : 1,
+      created_at: new Date(),
+      updated_at: new Date(),
     };
     dispatch(addTaskList(newTaskList));
   };
 
   return (
-    <div className={styles.pageContainer}>
-      <div className={styles.head}>
-        <h1 className={styles.title}>My Task Board</h1>
-        <button className={styles.addListBtn} onClick={handleAddNewList}>
-          + Create new list
-        </button>
+    <div>
+      <Link to="http://localhost:3000/">
+        <h2>All Boards</h2>
+      </Link>
+      <div>
+        <h1>My Task Board</h1>
+        <button onClick={handleAddNewList}>+ Create new list</button>
       </div>
 
       <TaskLists
@@ -69,4 +74,4 @@ const HomePage: React.FC = () => {
   );
 };
 
-export default HomePage;
+export default BoardPage;

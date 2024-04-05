@@ -5,11 +5,13 @@ import { useDispatch } from "react-redux";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { taskHistoryReducer } from "./taskHistory/taskHistorySlice";
+import taskBoardReducer from "./taskBoard/taskBoardSlice";
 
 const rootReducer = combineReducers({
   tasks: taskReducer,
   taskLists: taskListReducer,
   taskHistory: taskHistoryReducer,
+  taskBoards: taskBoardReducer,
 });
 
 const persistConfig = {

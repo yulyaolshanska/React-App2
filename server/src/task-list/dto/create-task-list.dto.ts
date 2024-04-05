@@ -10,6 +10,9 @@ export class CreateTaskListDto {
   @ApiProperty()
   position: number;
 
+  @ApiProperty()
+  board_id: number;
+
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   @ApiProperty()
   created_at: Date;

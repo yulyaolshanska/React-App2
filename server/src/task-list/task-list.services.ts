@@ -6,6 +6,7 @@ import { Repository } from 'typeorm';
 import { CreateTaskListDto } from './dto/create-task-list.dto';
 import { UpdateTaskListDto } from './dto/update-task-list.dto';
 import { TaskList } from './entities/task-list.entity';
+import { TaskBoard } from 'src/task-board/entities/task-board.entity';
 
 @Injectable()
 export class TaskListService {
@@ -16,24 +17,45 @@ export class TaskListService {
     private readonly taskRepository: Repository<Task>,
     @InjectRepository(TaskHistory)
     private readonly taskHistoryRepository: Repository<TaskHistory>,
+    @InjectRepository(TaskBoard)
+    private boardRepository: Repository<TaskBoard>,
   ) {}
 
   async createTaskList(
     createTaskListDto: CreateTaskListDto,
   ): Promise<TaskList> {
-    const taskLists = await this.taskListRepository.find();
-    let targetPos = taskLists.length > 0 ? taskLists.length + 1 : 1;
-    const taskList = this.taskListRepository.create({
+    const allTaskLists = await this.taskListRepository.find();
+    let targetPos = allTaskLists.length > 0 ? allTaskLists.length + 1 : 1;
+
+    const taskBoard = await this.boardRepository.findOne({
+      where: { id: createTaskListDto.board_id },
+    });
+    if (!taskBoard) {
+      throw new Error(`Board with ID ${createTaskListDto.board_id} not found`);
+    }
+
+    const newList = this.taskListRepository.create({
       ...createTaskListDto,
       position: targetPos,
+      board: taskBoard,
     });
 
-    return this.taskListRepository.save(taskList);
+    const savedList = await this.taskListRepository.save(newList);
+
+    return savedList;
+  }
+
+  async findAllByBoardId(id: number) {
+    return this.boardRepository
+      .findOne({ relations: ['column'], where: { id } })
+      .then((board: TaskBoard) => {
+        return board.column;
+      });
   }
 
   async getAllTaskLists(): Promise<TaskList[]> {
     return this.taskListRepository.find({
-      relations: ['task'],
+      relations: ['task', 'board'],
     });
   }
 

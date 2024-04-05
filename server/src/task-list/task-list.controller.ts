@@ -25,6 +25,11 @@ export class TaskListController {
     return this.taskListService.getAllTaskLists();
   }
 
+  @Get(':id')
+  findAllByBoardId(@Param('id') id: string) {
+    return this.taskListService.findAllByBoardId(Number(id));
+  }
+
   @Patch(':id')
   update(
     @Param('id') id: string,

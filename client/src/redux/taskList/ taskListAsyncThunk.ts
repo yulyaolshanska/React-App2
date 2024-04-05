@@ -2,11 +2,22 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { BASE_URL } from "../../constants";
 import { TaskList } from "../../interfaces/ TaskList.interface";
 
-export const fetchTaskLists = createAsyncThunk<TaskList[]>(
+export const getAllTaskLists = createAsyncThunk<TaskList[]>(
   "taskLists/fetchTaskLists",
   async () => {
     const response = await fetch(`${BASE_URL}/task-list`);
     const data = await response.json();
+
+    return data;
+  }
+);
+
+export const getTaskListsByBoardId = createAsyncThunk(
+  "taskLists/getTaskListsByBoardId",
+  async (id: number) => {
+    const response = await fetch(`${BASE_URL}/task-list/${id}`);
+    const data = await response.json();
+
     return data;
   }
 );
