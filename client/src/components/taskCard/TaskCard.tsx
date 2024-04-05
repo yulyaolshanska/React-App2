@@ -37,21 +37,28 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, columns, children }) => {
   };
 
   return (
-    <div className={styles.taskCard}>
+    <div className="relative bg-white border border-gray-300 rounded-md p-4 mb-3 flex flex-col gap-3 w-full">
       {children}
-
-      <h3 className={styles.title}>{task.title}</h3>
-      <p className={styles.description}>{task.description}</p>
-      <p className={styles.dueDate}>Due Date: {formatDueDate(task.due_date)}</p>
-      <p className={styles.priority}>Priority: {task.priority}</p>
-      <div className={styles.formGroup}>
-        <label htmlFor="columnId" className={styles.label}>
+      <h3 className="text-lg font-bold">{task.title}</h3>
+      <p className="text-base">{task.description}</p>
+      <p className="text-base text-gray-700 font-semibold">
+        Due Date:
+        <span className="ml-1 text-sm font-medium">
+          {formatDueDate(task.due_date)}
+        </span>
+      </p>
+      <p className="text-base text-gray-700 font-semibold">
+        Priority:
+        <span className="ml-1 text-sm font-medium">{task.priority}</span>
+      </p>
+      <div className="bg-gray-300 bg-opacity-60 text-base w-3/4 rounded-md p-1">
+        <label htmlFor="columnId" className="cursor-default">
           Move to:
         </label>
         <select
           id="columnId"
           onChange={(e) => handleMoveTask(e)}
-          className={styles.select}
+          className="cursor-pointer "
           name="columnId"
         >
           <option value={task.column.title}></option>
