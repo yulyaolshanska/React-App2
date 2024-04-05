@@ -32,16 +32,25 @@ export const updateTaskBoard = createAsyncThunk<
   TaskBoard,
   { id: number; newTitle: string }
 >("taskBoards/updateTaskBoard", async ({ id, newTitle }) => {
-  const response = await fetch(`${BASE_URL}/task-board/${id}`, {
-    method: "PATCH",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ title: newTitle }),
-  });
-  const data = await response.json();
+  try {
+    const response = await fetch(`${BASE_URL}/task-board/${id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ title: newTitle }),
+    });
 
-  return data;
+    if (!response.ok) {
+      throw new Error("Failed to update task board");
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error updating task board:", error);
+    throw error;
+  }
 });
 
 export const deleteTaskBoard = createAsyncThunk<number, number>(
