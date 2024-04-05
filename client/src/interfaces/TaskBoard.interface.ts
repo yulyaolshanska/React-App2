@@ -1,4 +1,4 @@
 export interface TaskBoard {
-  id?: number;
+  id: number;
   title: string;
 }
