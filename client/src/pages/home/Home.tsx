@@ -49,7 +49,7 @@ const HomePage: React.FC = () => {
   return (
     <div className={styles.pageContainer}>
       <button onClick={handleAddNewBoard}>Add new board</button>
-      {boards &&
+      {boards.length > 0 &&
         boards.map((board) => (
           <BoardCard key={board.id} board={board}>
             <DropDown

@@ -30,6 +30,7 @@ const TaskLists: React.FC<TaskListProps> = ({
   const dispatch = useAppDispatch();
   const addModalRef = useRef<HTMLDivElement>(null);
   const editModalRef = useRef<HTMLDivElement>(null);
+  const editTitleRef = useRef<HTMLInputElement>(null);
   const [isOpenAddModal, setIsOpenAddModal] = useState<boolean>(false);
   const [activeTitleInput, setActiveTitleInput] = useState<number | null>(null);
   const [isOpenEditModal, setIsOpenEditModal] = useState<boolean>(false);
@@ -127,8 +128,10 @@ const TaskLists: React.FC<TaskListProps> = ({
               >
                 <div className="relative p-2 flex">
                   <EditableTitle
+                    ref={editTitleRef}
                     isActive={activeTitleInput === id}
                     onSave={handleListTitleSave}
+                    handleClick={() => setActiveTitleInput(id)}
                     id={id}
                     initialValue={title}
                   />

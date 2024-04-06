@@ -20,7 +20,10 @@ const BoardCard: React.FC<BoardCardProps> = ({ board, children }) => {
   };
 
   return (
-    <div className={styles.card}>
+    <div
+      // className={styles.card}
+      className={`border-solid border-4  flex border-gray-600 flex-col cursor-pointer rounded-lg w-64 h-32 m-8 justify-center bg-gray-300 relative p-5`}
+    >
       <div className={styles.inputContainer}>
         <EditableTitle
           onSave={handleBoardTitleSave}
@@ -29,10 +32,7 @@ const BoardCard: React.FC<BoardCardProps> = ({ board, children }) => {
         />
         {children}
       </div>
-      <Link
-        to={`board/${board.id}`}
-        // className={`border-dashed border-4 border-gray-600 flex cursor-pointer rounded-lg w-64 h-32 m-8 justify-center bg-gray-300`}
-      >
+      <Link to={`board/${board.id}`}>
         <div className="flex items-center">
           <h2>Go to board</h2>
         </div>
