@@ -51,3 +51,9 @@ cd client
 npm i
 npm run  start
 ```
+
+- storybook
+  ```
+  npx storybook init
+  npm run storybook
+  ```
