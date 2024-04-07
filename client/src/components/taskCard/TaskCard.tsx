@@ -5,9 +5,9 @@ import { Task } from "../../interfaces/Task";
 import { useAppDispatch } from "../../redux/store";
 import { updateTask } from "../../redux/tasks/taskAsyncThunk";
 
-interface TaskCardProps {
+export interface TaskCardProps {
   task: Task;
-  children: React.ReactElement;
+  children?: React.ReactElement;
   columns: TaskList[];
 }
 

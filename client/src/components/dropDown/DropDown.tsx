@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import styles from "./DropDown.module.scss";
 
-interface DropDownProps {
+export interface DropDownProps {
   onAddClick?: () => void;
   onEditClick: () => void;
   onDeleteClick: () => void;

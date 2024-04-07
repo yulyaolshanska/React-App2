@@ -1,6 +1,6 @@
 import React, { useState, forwardRef } from "react";
 
-interface EditableTitleProps {
+export interface EditableTitleProps {
   id: number;
   initialValue: string;
   onSave: (id: number, newTitle: string) => void;
