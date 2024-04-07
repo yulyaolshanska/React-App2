@@ -6,7 +6,7 @@ import { Repository } from 'typeorm';
 import { CreateTaskListDto } from './dto/create-task-list.dto';
 import { UpdateTaskListDto } from './dto/update-task-list.dto';
 import { TaskList } from './entities/task-list.entity';
-import { TaskBoard } from 'src/task-board/entities/task-board.entity';
+import { TaskBoard } from '../task-board/entities/task-board.entity';
 
 @Injectable()
 export class TaskListService {

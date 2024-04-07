@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common';
 import { CreateTaskBoardDto } from './dto/create-task-board.dto';
 import { UpdateTaskBoardDto } from './dto/update-task-board.dto';
-import { TaskBoardService } from './task-board.services';
+import { TaskBoardService } from './task-board.service';
 
 @Controller('api/task-board')
 export class TaskBoardController {

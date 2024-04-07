@@ -5,7 +5,7 @@ import { Task } from './entities/task.entity';
 import { CreateTaskDto, UpdateTaskDto } from './dto/create-task.dto';
 import { TaskHistoryService } from '../task-history/task-history.service';
 import { Priority } from '../constants/enums/priority.enum';
-import { TaskListService } from '../task-list/task-list.services';
+import { TaskListService } from '../task-list/task-list.service';
 import { TaskList } from '../task-list/entities/task-list.entity';
 import { TaskHistory } from '../task-history/entities/task-history.entity';
 
@@ -138,8 +138,10 @@ export class TaskService {
     return updatedTask;
   }
 
-  async removeTask(id: number): Promise<void> {
+  async removeTask(id: number) {
     await this.taskHistoryRepository.delete({ task: { id } });
     await this.taskRepository.delete(id);
+
+    return { message: `Task with id ${id} deleted` };
   }
 }

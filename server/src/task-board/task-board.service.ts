@@ -4,8 +4,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { TaskBoard } from './entities/task-board.entity';
 import { CreateTaskBoardDto } from './dto/create-task-board.dto';
 import { UpdateTaskBoardDto } from './dto/update-task-board.dto';
-import { TaskList } from 'src/task-list/entities/task-list.entity';
-import { TaskListService } from 'src/task-list/task-list.service';
+import { TaskList } from "../task-list/entities/task-list.entity";
+import { TaskListService } from '../task-list/task-list.service';
 
 @Injectable()
 export class TaskBoardService {

@@ -1,12 +1,12 @@
 import { forwardRef, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { TaskHistoryModule } from 'src/task-history/task-history.module';
-import { TaskListModule } from 'src/task-list/task-list.module';
-import { TaskListService } from 'src/task-list/task-list.services';
-import { TaskModule } from 'src/tasks/tasks.module';
+import { TaskHistoryModule } from '../task-history/task-history.module';
+import { TaskListModule } from '../task-list/task-list.module';
+import { TaskListService } from '../task-list/task-list.service';
+import { TaskModule } from '../tasks/tasks.module';
 import { TaskBoard } from './entities/task-board.entity';
 import { TaskBoardController } from './task-board.controller';
-import { TaskBoardService } from './task-board.services';
+import { TaskBoardService } from './task-board.service';
 
 @Module({
   imports: [
