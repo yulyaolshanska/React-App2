@@ -5,7 +5,7 @@ import { TaskBoard } from './entities/task-board.entity';
 import { CreateTaskBoardDto } from './dto/create-task-board.dto';
 import { UpdateTaskBoardDto } from './dto/update-task-board.dto';
 import { TaskList } from 'src/task-list/entities/task-list.entity';
-import { TaskListService } from 'src/task-list/task-list.services';
+import { TaskListService } from 'src/task-list/task-list.service';
 
 @Injectable()
 export class TaskBoardService {
@@ -20,6 +20,7 @@ export class TaskBoardService {
     const newBoard = this.taskBoardRepository.create({ ...createTaskBoardDto });
 
     const savedBoard = await this.taskBoardRepository.save(newBoard);
+
     return savedBoard;
   }
 
@@ -50,11 +51,9 @@ export class TaskBoardService {
         updateTaskBoardDto.title !== undefined &&
         updateTaskBoardDto.title !== board.title
       ) {
-        Object.assign(board, updateTaskBoardDto);
+        const updatedBoard = { ...board, updateTaskBoardDto };
 
-        const updatedBoard = await this.taskBoardRepository.save(board);
-
-        return updatedBoard;
+        return await this.taskBoardRepository.save(updatedBoard);
       } else {
         return board;
       }
@@ -76,5 +75,7 @@ export class TaskBoardService {
       }
     }
     await this.taskBoardRepository.delete(id);
+
+    return { message: `Task Board with id ${id} deleted` };
   }
 }

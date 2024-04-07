@@ -93,5 +93,7 @@ export class TaskListService {
     await this.taskRepository.delete({ column: { id } });
 
     await this.taskListRepository.delete(id);
+
+    return { message: `Task with id ${id} deleted` };
   }
 }
