@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
+import AddButton from "../../components/buttons/addButton/AddButton";
 import TaskLists from "../../components/taskList/TaskList";
 import { TaskList } from "../../interfaces/ TaskList.interface";
 import { RootState, useAppDispatch } from "../../redux/store";
@@ -20,7 +21,6 @@ const BoardPage: React.FC = () => {
   const { id } = useParams();
   const taskLists = useSelector(selectTaskLists);
   const tasks = useSelector((state: RootState) => state.tasks.tasks);
-
   const isTaskListLoading = useSelector(selectTaskListsLoading);
   const taskListError = useSelector(selectTaskListsError);
 
@@ -55,29 +55,32 @@ const BoardPage: React.FC = () => {
   };
 
   return (
-    <div className="p-0  pb-5">
-      <div className="flex bg-blue-300 p-3 mb-5">
-        <Link to="http://localhost:3000/">
-          <h2 className="border-solid border-1 border-cyan-600 text-xl rounded-lg p-2 mr-5">
-            All Boards
-          </h2>
-        </Link>
-        <button
-          onClick={handleAddNewList}
-          className="ml-auto flex border-solid border-1 border-cyan-600 rounded-lg p-2 text-lg font-semibold"
-        >
-          + Create new list
-        </button>
-      </div>
-      <h1 className="text-xl text-center mb-5">{taskLists[0].board?.title}</h1>
+    <>
+      {isTaskListLoading ? (
+        <div>Loading</div>
+      ) : (
+        <div className="p-0  pb-5">
+          <div className="flex bg-blue-300 p-3 mb-5">
+            <Link to="http://localhost:3000/">
+              <h2 className="border-solid border-1 border-cyan-600 text-xl rounded-lg p-2 mr-5">
+                All Boards
+              </h2>
+            </Link>
+            <AddButton onClick={handleAddNewList} text="+ Create new list" />
+          </div>
+          <h1 className="text-xl text-center mb-5">
+            {taskLists[0]?.board?.title}
+          </h1>
 
-      <TaskLists
-        taskLists={taskLists}
-        tasks={tasks}
-        loading={isTaskListLoading}
-        error={taskListError}
-      />
-    </div>
+          <TaskLists
+            taskLists={taskLists}
+            tasks={tasks}
+            loading={isTaskListLoading}
+            error={taskListError}
+          />
+        </div>
+      )}
+    </>
   );
 };
 
