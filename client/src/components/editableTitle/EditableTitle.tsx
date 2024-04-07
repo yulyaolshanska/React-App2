@@ -1,19 +1,17 @@
-import React, { useState } from "react";
-import styles from "./EditableTitle.module.scss";
+import React, { useState, forwardRef } from "react";
 
 interface EditableTitleProps {
   id: number;
   initialValue: string;
   onSave: (id: number, newTitle: string) => void;
+  handleClick?: () => void;
   isActive?: boolean;
 }
 
-const EditableTitle: React.FC<EditableTitleProps> = ({
-  initialValue,
-  onSave,
-  id,
-  isActive,
-}) => {
+const EditableTitle: React.ForwardRefRenderFunction<
+  HTMLInputElement,
+  EditableTitleProps
+> = ({ initialValue, onSave, id, isActive, handleClick }, ref) => {
   const [title, setTitle] = useState(initialValue);
 
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -32,8 +30,11 @@ const EditableTitle: React.FC<EditableTitleProps> = ({
 
   return (
     <input
-      className={`${styles.boardTitleInput} ${
-        isActive ? styles.activeInput : ""
+      ref={ref}
+      className={`"text-xl font-bold  outline-none w-[230px] pr-12" ${
+        isActive
+          ? "border-solid border-t-1 border-l-0 border-r-0 border-b-1 border-t-0 border-cyan-600"
+          : ""
       }`}
       type="text"
       id={`input-${id}`}
@@ -42,8 +43,9 @@ const EditableTitle: React.FC<EditableTitleProps> = ({
       onChange={handleTitleChange}
       onBlur={handleBlur}
       onKeyPress={handleKeyPress}
+      onClick={handleClick}
     />
   );
 };
 
-export default EditableTitle;
+export default forwardRef(EditableTitle);

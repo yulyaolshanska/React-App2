@@ -8,7 +8,7 @@ import {
   ManyToOne,
   JoinColumn,
 } from 'typeorm';
-import { TaskBoard } from 'src/task-board/entities/task-board.entity';
+import { TaskBoard } from '../../task-board/entities/task-board.entity';
 
 @Entity()
 export class TaskList {

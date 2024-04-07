@@ -47,18 +47,25 @@ const HomePage: React.FC = () => {
   };
 
   return (
-    <div className={styles.pageContainer}>
-      <button onClick={handleAddNewBoard}>Add new board</button>
-      {boards &&
-        boards.map((board) => (
-          <BoardCard key={board.id} board={board}>
-            <DropDown
-              onEditClick={() => focusInput(board.id)}
-              onDeleteClick={() => handleDeleteTaskBoard(board.id)}
-              mode="task"
-            />
-          </BoardCard>
-        ))}
+    <div className="p-5">
+      <button
+        onClick={handleAddNewBoard}
+        className="ml-auto flex border-solid border-1 border-cyan-600  rounded-lg p-3 text-lg font-semibold"
+      >
+        + Add new board
+      </button>
+      <div className="flex gap-5 flex-wrap p-5">
+        {boards.length > 0 &&
+          boards.map((board) => (
+            <BoardCard key={board.id} board={board}>
+              <DropDown
+                onEditClick={() => focusInput(board.id)}
+                onDeleteClick={() => handleDeleteTaskBoard(board.id)}
+                mode="task"
+              />
+            </BoardCard>
+          ))}
+      </div>
     </div>
   );
 };

@@ -6,7 +6,7 @@ import { Repository } from 'typeorm';
 import { CreateTaskListDto } from './dto/create-task-list.dto';
 import { UpdateTaskListDto } from './dto/update-task-list.dto';
 import { TaskList } from './entities/task-list.entity';
-import { TaskBoard } from 'src/task-board/entities/task-board.entity';
+import { TaskBoard } from '../task-board/entities/task-board.entity';
 
 @Injectable()
 export class TaskListService {
@@ -46,11 +46,15 @@ export class TaskListService {
   }
 
   async findAllByBoardId(id: number) {
-    return this.boardRepository
-      .findOne({ relations: ['column'], where: { id } })
-      .then((board: TaskBoard) => {
-        return board.column;
-      });
+    const board = await this.boardRepository.findOne({
+      relations: ['column'],
+      where: { id },
+    });
+    const taskLists = await this.taskListRepository.find({
+      where: { board: { id: board.id } },
+      relations: ['task', 'board'],
+    });
+    return taskLists;
   }
 
   async getAllTaskLists(): Promise<TaskList[]> {
@@ -89,5 +93,7 @@ export class TaskListService {
     await this.taskRepository.delete({ column: { id } });
 
     await this.taskListRepository.delete(id);
+
+    return { message: `Task with id ${id} deleted` };
   }
 }

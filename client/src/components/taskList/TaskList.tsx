@@ -12,7 +12,6 @@ import DropDown from "../dropDown/DropDown";
 import EditableTitle from "../editableTitle/EditableTitle";
 import TaskCard from "../taskCard/TaskCard";
 import TaskModal from "../taskModal/TaskModal";
-import styles from "./TaskLists.module.scss";
 
 interface TaskListProps {
   taskLists: TaskList[];
@@ -30,6 +29,7 @@ const TaskLists: React.FC<TaskListProps> = ({
   const dispatch = useAppDispatch();
   const addModalRef = useRef<HTMLDivElement>(null);
   const editModalRef = useRef<HTMLDivElement>(null);
+  const editTitleRef = useRef<HTMLInputElement>(null);
   const [isOpenAddModal, setIsOpenAddModal] = useState<boolean>(false);
   const [activeTitleInput, setActiveTitleInput] = useState<number | null>(null);
   const [isOpenEditModal, setIsOpenEditModal] = useState<boolean>(false);
@@ -109,47 +109,44 @@ const TaskLists: React.FC<TaskListProps> = ({
   }, [isOpenAddModal, isOpenEditModal]);
 
   return (
-    <div>
+    <>
       {loading && <p>Loading...</p>}
       {error && <p>Error: {error}</p>}
 
-      <ul className={styles.taskLists}>
+      <ul className="flex gap-10 pl-5 pr-5">
         {taskLists.length > 0 &&
           [...taskLists]
             .sort(
               (first: TaskList, second: TaskList) =>
                 first.position - second.position
             )
-            .map((taskList) => (
-              <li key={taskList.id}>
-                <div className={styles.listTitleContainer}>
+            .map(({ id, title, task }) => (
+              <li
+                className="h-fit bg-gray-200 rounded-lg shadow-md p-2 flex flex-col justify-between"
+                key={id}
+              >
+                <div className="relative p-2 flex">
                   <EditableTitle
-                    isActive={activeTitleInput === taskList.id}
+                    ref={editTitleRef}
+                    isActive={activeTitleInput === id}
                     onSave={handleListTitleSave}
-                    id={taskList.id}
-                    initialValue={taskList.title}
+                    handleClick={() => setActiveTitleInput(id)}
+                    id={id}
+                    initialValue={title}
                   />
-                  {taskList?.task && (
-                    <p className={styles.taskCounter}>
-                      {taskList?.task.length > 0 ? taskList?.task.length : 0}
+                  {task && (
+                    <p className="absolute right-10">
+                      {task.length > 0 ? task.length : 0}
                     </p>
                   )}
                   <DropDown
                     onAddClick={() => setIsOpenAddModal(true)}
-                    onEditClick={() => focusInput(taskList.id)}
-                    onDeleteClick={() => handleDeleteTaskList(taskList.id)}
+                    onEditClick={() => focusInput(id)}
+                    onDeleteClick={() => handleDeleteTaskList(id)}
                     mode="list"
                   />
                 </div>
-                <button
-                  className={styles.addTaskBtn}
-                  onClick={() => {
-                    setIsOpenAddModal(true);
-                    setActiveListId(taskList.id);
-                  }}
-                >
-                  + Add new task
-                </button>
+
                 {activeListId && (
                   <AddTaskForm
                     ref={addModalRef}
@@ -160,7 +157,7 @@ const TaskLists: React.FC<TaskListProps> = ({
                 )}
                 {tasks &&
                   tasks
-                    .filter((t: Task) => t?.column?.id === taskList.id)
+                    .filter((t: Task) => t?.column?.id === id)
                     .sort(
                       (first: Task, second: Task) =>
                         first.position - second.position
@@ -186,10 +183,19 @@ const TaskLists: React.FC<TaskListProps> = ({
                     isOpen={isOpenEditModal}
                   />
                 )}
+                <button
+                  className="flex border border-gray-400 rounded-md p-1 text-lg w-full justify-center font-semibold"
+                  onClick={() => {
+                    setIsOpenAddModal(true);
+                    setActiveListId(id);
+                  }}
+                >
+                  + Add new task
+                </button>
               </li>
             ))}
       </ul>
-    </div>
+    </>
   );
 };
 

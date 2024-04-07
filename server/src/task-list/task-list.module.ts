@@ -2,10 +2,10 @@ import { forwardRef, Module } from '@nestjs/common';
 import { TaskList } from './entities/task-list.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TaskListController } from './task-list.controller';
-import { TaskListService } from './task-list.services';
+import { TaskListService } from './task-list.service';
 import { TaskModule } from '../tasks/tasks.module';
 import { TaskHistoryModule } from '../task-history/task-history.module';
-import { TaskBoardModule } from 'src/task-board/task-board.module';
+import { TaskBoardModule } from '../task-board/task-board.module';
 
 @Module({
   imports: [
