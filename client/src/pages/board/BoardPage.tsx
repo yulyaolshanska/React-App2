@@ -55,14 +55,21 @@ const BoardPage: React.FC = () => {
   };
 
   return (
-    <div>
-      <Link to="http://localhost:3000/">
-        <h2>All Boards</h2>
-      </Link>
-      <div>
-        <h1>My Task Board</h1>
-        <button onClick={handleAddNewList}>+ Create new list</button>
+    <div className="p-0  pb-5">
+      <div className="flex bg-blue-300 p-3 mb-5">
+        <Link to="http://localhost:3000/">
+          <h2 className="border-solid border-1 border-cyan-600 text-xl rounded-lg p-2 mr-5">
+            All Boards
+          </h2>
+        </Link>
+        <button
+          onClick={handleAddNewList}
+          className="ml-auto flex border-solid border-1 border-cyan-600 rounded-lg p-2 text-lg font-semibold"
+        >
+          + Create new list
+        </button>
       </div>
+      <h1 className="text-xl text-center mb-5">{taskLists[0].board?.title}</h1>
 
       <TaskLists
         taskLists={taskLists}

@@ -4,7 +4,6 @@ import { TaskList } from "../../interfaces/ TaskList.interface";
 import { Task } from "../../interfaces/Task";
 import { useAppDispatch } from "../../redux/store";
 import { updateTask } from "../../redux/tasks/taskAsyncThunk";
-import styles from "./TaskCard.module.scss";
 
 interface TaskCardProps {
   task: Task;

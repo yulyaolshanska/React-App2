@@ -49,9 +49,16 @@ const TaskModal: React.ForwardRefRenderFunction<
       <div className="fixed inset-0 bg-black opacity-50"></div>
       <div
         ref={ref}
-        className="=orelative bg-white rounded-lg flex   w-5/6 shadow-md z-50"
+        className="relative bg-white rounded-lg flex w-5/6 shadow-md z-50"
       >
-        <div className="w-3/5 p-5 flex flex-col justify-center relative">
+        <button
+          onClick={handleClose}
+          className="absolute right-4 top-4 w-6 h-6 flex items-center justify-center rounded-full bg-pink-800 text-white hover:bg-red-600"
+        >
+          &times;
+        </button>
+
+        <div className="w-3/5 p-8 flex flex-col justify-center relative">
           <h2 className="text-center font-semibold text-xl mb-5"> Task info</h2>
           <button
             className="border-solid border-1 border-cyan-500 rounded-md ml-auto mb-5 p-2  w-28 text-sm"
@@ -256,19 +263,13 @@ const TaskModal: React.ForwardRefRenderFunction<
                   type="submit"
                   className="bg-blue-600 w-48 justify-center text-white py-2 px-4 rounded-lg cursor-pointer mx-auto mb-4 hover:bg-blue-700"
                 >
-                  Submit
+                  Save
                 </button>
               )}
             </form>
           )}
-          <button
-            onClick={handleClose}
-            className="bg-red-500 text-white py-2 px-4 rounded-lg cursor-pointer w-48 mx-auto hover:bg-red-600"
-          >
-            Cancel
-          </button>
         </div>
-        <div className="w-5/12 p-5 bg-gray-400 bg-opacity-40">
+        <div className="w-5/12 pt-8 pl-7 pr-5 pb-5 bg-gray-400 bg-opacity-40">
           <h2 className="text-center font-semibold text-xl mb-5">
             Task history
           </h2>

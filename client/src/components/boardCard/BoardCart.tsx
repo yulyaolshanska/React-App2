@@ -3,7 +3,6 @@ import { TaskBoard } from "../../interfaces/TaskBoard.interface";
 import { useAppDispatch } from "../../redux/store";
 import { updateTaskBoard } from "../../redux/taskBoard/taskBoardAsyncThunk";
 import EditableTitle from "../editableTitle/EditableTitle";
-import styles from "./BoardCard.module.scss";
 interface BoardCardProps {
   board: TaskBoard;
   children: React.ReactElement;
@@ -21,10 +20,9 @@ const BoardCard: React.FC<BoardCardProps> = ({ board, children }) => {
 
   return (
     <div
-      // className={styles.card}
-      className={`border-solid border-4  flex border-gray-600 flex-col cursor-pointer rounded-lg w-64 h-32 m-8 justify-center bg-gray-300 relative p-5`}
+      className={`border-solid border-2  flex border-cyan-600 flex-col cursor-pointer rounded-lg w-64 h-32 justify-center bg-cyan-100 relative p-5`}
     >
-      <div className={styles.inputContainer}>
+      <div className="mb-5">
         <EditableTitle
           onSave={handleBoardTitleSave}
           id={board.id}
