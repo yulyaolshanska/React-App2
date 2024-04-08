@@ -3,7 +3,26 @@
 ## Link to the website: [Click to view website](https://app-task-manager-app.vercel.app/)
 
 
-### Installation
+## Run application using docker
+
+in root directory
+
+```shell
+docker-compose up --build
+```
+
+for restart
+
+```shell
+docker-compose up
+```
+
+
+### Server Installation
+
+```shell
+cd server
+```
 
 ```shell
 $ npm install
@@ -33,3 +52,15 @@ cd client
 npm i
 npm run  start
 ```
+
+## Storybook
+
+```
+npm run storybook
+```
+
+(page http://localhost:6006/ open automatically)
+
+## Swagger docs
+
+[Swagger Page] (http://localhost:8000/api/docs)
