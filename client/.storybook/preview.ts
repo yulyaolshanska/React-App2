@@ -1,6 +1,4 @@
 import type { Preview } from "@storybook/react";
-import { Provider } from "react-redux";
-import store from "../src/redux/store";
 import "tailwindcss/tailwind.css";
 import "../src/styles/global.css";
 
