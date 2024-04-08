@@ -1,6 +1,6 @@
 # Task Manager
 
-## Link to the website: [Click to view website](https://app-task-manager-app.vercel.app/)
+## Link to the website: [Click to view website](https://task-manager-app-2.vercel.app/)
 
 
 ## Run application using docker
