@@ -2,6 +2,7 @@
 
 ## Link to the website: [Click to view website](https://app-task-manager-app.vercel.app/)
 
+
 ## Run application using docker
 
 in root directory
@@ -15,6 +16,7 @@ for restart
 ```shell
 docker-compose up
 ```
+
 
 ### Server Installation
 
