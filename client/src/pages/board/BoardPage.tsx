@@ -61,7 +61,7 @@ const BoardPage: React.FC = () => {
       ) : (
         <div className="p-0  pb-5">
           <div className="flex bg-blue-300 p-3 mb-5">
-            <Link to="http://localhost:3000/">
+            <Link to="/">
               <h2 className="border-solid border-1 border-cyan-600 text-xl rounded-lg p-2 mr-5">
                 All Boards
               </h2>
