@@ -5,5 +5,5 @@ export interface TaskHistory {
   action: string;
   user: string;
   created_at: Date;
-  task: Task;
+  task?: Task;
 }

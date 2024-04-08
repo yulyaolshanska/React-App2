@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import BoardCard from "../../components/boardCard/BoardCart";
+import AddButton from "../../components/buttons/addButton/AddButton";
 import DropDown from "../../components/dropDown/DropDown";
 import { TaskBoard } from "../../interfaces/TaskBoard.interface";
 import { useAppDispatch } from "../../redux/store";
@@ -10,7 +11,6 @@ import {
   getAllTaskBoards,
 } from "../../redux/taskBoard/taskBoardAsyncThunk";
 import { selectTaskBoards } from "../../redux/taskBoard/taskBoardSelectors";
-import styles from "./Home.module.scss";
 
 const HomePage: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -47,26 +47,27 @@ const HomePage: React.FC = () => {
   };
 
   return (
-    <div className="p-5">
-      <button
-        onClick={handleAddNewBoard}
-        className="ml-auto flex border-solid border-1 border-cyan-600  rounded-lg p-3 text-lg font-semibold"
-      >
-        + Add new board
-      </button>
-      <div className="flex gap-5 flex-wrap p-5">
-        {boards.length > 0 &&
-          boards.map((board) => (
-            <BoardCard key={board.id} board={board}>
-              <DropDown
-                onEditClick={() => focusInput(board.id)}
-                onDeleteClick={() => handleDeleteTaskBoard(board.id)}
-                mode="task"
-              />
-            </BoardCard>
-          ))}
-      </div>
-    </div>
+    <>
+      {boards.length === 0 ? (
+        <div>You don't have any boards</div>
+      ) : (
+        <div className="p-5">
+          <AddButton onClick={handleAddNewBoard} text="+ Add new board" />
+          <div className="flex gap-5 flex-wrap p-5">
+            {boards.length > 0 &&
+              boards.map((board) => (
+                <BoardCard key={board.id} board={board}>
+                  <DropDown
+                    onEditClick={() => focusInput(board.id)}
+                    onDeleteClick={() => handleDeleteTaskBoard(board.id)}
+                    mode="task"
+                  />
+                </BoardCard>
+              ))}
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 

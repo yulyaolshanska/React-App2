@@ -112,89 +112,90 @@ const TaskLists: React.FC<TaskListProps> = ({
     <>
       {loading && <p>Loading...</p>}
       {error && <p>Error: {error}</p>}
-
-      <ul className="flex gap-10 pl-5 pr-5">
-        {taskLists.length > 0 &&
-          [...taskLists]
-            .sort(
-              (first: TaskList, second: TaskList) =>
-                first.position - second.position
-            )
-            .map(({ id, title, task }) => (
-              <li
-                className="h-fit bg-gray-200 rounded-lg shadow-md p-2 flex flex-col justify-between"
-                key={id}
-              >
-                <div className="relative p-2 flex">
-                  <EditableTitle
-                    ref={editTitleRef}
-                    isActive={activeTitleInput === id}
-                    onSave={handleListTitleSave}
-                    handleClick={() => setActiveTitleInput(id)}
-                    id={id}
-                    initialValue={title}
-                  />
-                  {task && (
-                    <p className="absolute right-10">
-                      {task.length > 0 ? task.length : 0}
-                    </p>
-                  )}
-                  <DropDown
-                    onAddClick={() => setIsOpenAddModal(true)}
-                    onEditClick={() => focusInput(id)}
-                    onDeleteClick={() => handleDeleteTaskList(id)}
-                    mode="list"
-                  />
-                </div>
-
-                {activeListId && (
-                  <AddTaskForm
-                    ref={addModalRef}
-                    listId={activeListId}
-                    onClose={handleCloseModal}
-                    isOpen={isOpenAddModal}
-                  />
-                )}
-                {tasks &&
-                  tasks
-                    .filter((t: Task) => t?.column?.id === id)
-                    .sort(
-                      (first: Task, second: Task) =>
-                        first.position - second.position
-                    )
-                    .map((task) => (
-                      <TaskCard task={task} key={task.id} columns={taskLists}>
-                        <DropDown
-                          onEditClick={() => {
-                            setIsOpenEditModal(true);
-                            setTaskForEdit(task);
-                          }}
-                          onDeleteClick={() => handleDeleteTask(task.id)}
-                          mode="task"
-                        />
-                      </TaskCard>
-                    ))}
-                {taskForEdit && (
-                  <TaskModal
-                    columns={taskLists}
-                    task={taskForEdit}
-                    ref={editModalRef}
-                    onClose={handleCloseModal}
-                    isOpen={isOpenEditModal}
-                  />
-                )}
-                <button
-                  className="flex border border-gray-400 rounded-md p-1 text-lg w-full justify-center font-semibold"
-                  onClick={() => {
-                    setIsOpenAddModal(true);
-                    setActiveListId(id);
-                  }}
+      {!loading && !error && (
+        <ul className="flex gap-10 pl-5 pr-5">
+          {taskLists.length > 0 &&
+            [...taskLists]
+              .sort(
+                (first: TaskList, second: TaskList) =>
+                  first.position - second.position
+              )
+              .map(({ id, title, task }) => (
+                <li
+                  className="h-fit bg-gray-200 rounded-lg shadow-md p-2 flex flex-col justify-between"
+                  key={id}
                 >
-                  + Add new task
-                </button>
-              </li>
-            ))}
-      </ul>
+                  <div className="relative p-2 flex">
+                    <EditableTitle
+                      ref={editTitleRef}
+                      isActive={activeTitleInput === id}
+                      onSave={handleListTitleSave}
+                      handleClick={() => setActiveTitleInput(id)}
+                      id={id}
+                      initialValue={title}
+                    />
+                    {task && (
+                      <p className="absolute right-10">
+                        {task.length > 0 ? task.length : 0}
+                      </p>
+                    )}
+                    <DropDown
+                      onAddClick={() => setIsOpenAddModal(true)}
+                      onEditClick={() => focusInput(id)}
+                      onDeleteClick={() => handleDeleteTaskList(id)}
+                      mode="list"
+                    />
+                  </div>
+
+                  {activeListId && (
+                    <AddTaskForm
+                      ref={addModalRef}
+                      listId={activeListId}
+                      onClose={handleCloseModal}
+                      isOpen={isOpenAddModal}
+                    />
+                  )}
+                  {tasks &&
+                    tasks
+                      .filter((t: Task) => t?.column?.id === id)
+                      .sort(
+                        (first: Task, second: Task) =>
+                          first.position - second.position
+                      )
+                      .map((task) => (
+                        <TaskCard task={task} key={task.id} columns={taskLists}>
+                          <DropDown
+                            onEditClick={() => {
+                              setIsOpenEditModal(true);
+                              setTaskForEdit(task);
+                            }}
+                            onDeleteClick={() => handleDeleteTask(task.id)}
+                            mode="task"
+                          />
+                        </TaskCard>
+                      ))}
+                  {taskForEdit && (
+                    <TaskModal
+                      columns={taskLists}
+                      task={taskForEdit}
+                      ref={editModalRef}
+                      onClose={handleCloseModal}
+                      isOpen={isOpenEditModal}
+                    />
+                  )}
+                  <button
+                    className="flex border border-gray-400 rounded-md p-1 text-lg w-full justify-center font-semibold"
+                    onClick={() => {
+                      setIsOpenAddModal(true);
+                      setActiveListId(id);
+                    }}
+                  >
+                    + Add new task
+                  </button>
+                </li>
+              ))}
+        </ul>
+      )}
     </>
   );
 };
