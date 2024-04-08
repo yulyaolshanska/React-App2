@@ -2,26 +2,25 @@
 
 ## Link to the website: [Click to view website](https://app-task-manager-app.vercel.app/)
 
-### Create .env file like this in server folder
+## Run application using docker
+
+in root directory
+
+```shell
+docker-compose up --build
+```
+
+for restart
+
+```shell
+docker-compose up
+```
+
+### Server Installation
 
 ```shell
 cd server
 ```
-
-```shell
-DATABASE_HOST=ep-icy-leaf-a4q6qgvr-pooler.us-east-1.aws.neon.tech
-DATABASE_PORT=5432
-DATABASE_USERNAME=default
-DATABASE_PASSWORD=uJliQh2YoV7O
-DATABASE_NAME=verceldb
-PGADMIN_DEFAULT_EMAIL=admin@admin.com
-PGADMIN_DEFAULT_PASSWORD=pgadmin4
-POSTGRES_PASSWORD=uJliQh2YoV7O
-POSTGRES_URL=postgres://default:uJliQh2YoV7O@ep-icy-leaf-a4q6qgvr-pooler.us-east-1.aws.neon.tech/verceldb?sslmode=require
-
-```
-
-### Installation
 
 ```shell
 $ npm install
@@ -52,8 +51,14 @@ npm i
 npm run  start
 ```
 
-- storybook
-  ```
-  npx storybook init
-  npm run storybook
-  ```
+## Storybook
+
+```
+npm run storybook
+```
+
+(page http://localhost:6006/ open automatically)
+
+## Swagger docs
+
+[Swagger Page] (http://localhost:8000/api/docs)

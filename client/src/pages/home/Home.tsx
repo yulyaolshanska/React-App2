@@ -47,27 +47,25 @@ const HomePage: React.FC = () => {
   };
 
   return (
-    <>
+    <div className="p-5">
+      <AddButton onClick={handleAddNewBoard} text="+ Add new board" />
       {boards.length === 0 ? (
         <div>You don't have any boards</div>
       ) : (
-        <div className="p-5">
-          <AddButton onClick={handleAddNewBoard} text="+ Add new board" />
-          <div className="flex gap-5 flex-wrap p-5">
-            {boards.length > 0 &&
-              boards.map((board) => (
-                <BoardCard key={board.id} board={board}>
-                  <DropDown
-                    onEditClick={() => focusInput(board.id)}
-                    onDeleteClick={() => handleDeleteTaskBoard(board.id)}
-                    mode="task"
-                  />
-                </BoardCard>
-              ))}
-          </div>
+        <div className="flex gap-5 flex-wrap p-5">
+          {boards.length > 0 &&
+            boards.map((board) => (
+              <BoardCard key={board.id} board={board}>
+                <DropDown
+                  onEditClick={() => focusInput(board.id)}
+                  onDeleteClick={() => handleDeleteTaskBoard(board.id)}
+                  mode="task"
+                />
+              </BoardCard>
+            ))}
         </div>
       )}
-    </>
+    </div>
   );
 };
 
