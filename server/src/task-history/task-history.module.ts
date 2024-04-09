@@ -4,7 +4,7 @@ import { TaskHistory } from './entities/task-history.entity';
 import { TaskHistoryService } from './task-history.service';
 import { TaskHistoryController } from './task-history.controller';
 import { TaskModule } from '../tasks/tasks.module';
-import { TaskBoardModule } from 'src/task-board/task-board.module';
+import { TaskBoardModule } from '../task-board/task-board.module';
 
 @Module({
   imports: [

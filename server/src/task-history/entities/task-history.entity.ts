@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { TaskBoard } from 'src/task-board/entities/task-board.entity';
+import { TaskBoard } from '../../task-board/entities/task-board.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
