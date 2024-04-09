@@ -48,6 +48,11 @@ $ npm run start:prod
 cd client
 ```
 
+.env for client 
+```shell
+REACT_APP_API_URL=http://localhost:8000/api
+```
+
 ```shell
 npm i
 npm run  start
