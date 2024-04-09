@@ -5,6 +5,7 @@ import { Repository } from 'typeorm';
 import { TaskHistoryDto } from './dto/task-history.dto';
 import { TaskHistory } from './entities/task-history.entity';
 import { TaskBoard } from '../task-board/entities/task-board.entity';
+import { formatDate } from '../utils/formatDate';
 
 @Injectable()
 export class TaskHistoryService {
@@ -119,7 +120,7 @@ export class TaskHistoryService {
     boardId: number,
   ) {
     return this.logTaskAction(
-      `Update due date to '${newDueDate.toISOString()}'`,
+      `Update due date to '${formatDate(newDueDate)}'`,
       taskId,
       username,
       boardId,

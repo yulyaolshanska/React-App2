@@ -2,6 +2,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { selectBoardHistory } from "../../redux/taskHistory/taskHistorySelectors";
+import { formatDateWithTime } from "../../utils/formatDate";
 import AddButton from "../buttons/addButton/AddButton";
 
 const HistorySidebar = () => {
@@ -78,7 +79,12 @@ const HistorySidebar = () => {
 
               <ul className="bg-white flex flex-col gap-6 pt-12 px-4 overflow-y-auto max-h-[93vh] h-screen">
                 {boardHistory.map((history) => (
-                  <li key={history.id}>{history.action}</li>
+                  <li className="flex list-disc mb-3 ml-3" key={history.id}>
+                    <p>{history.action}</p>
+                    <span className=" ml-auto">
+                      {formatDateWithTime(history.created_at)}
+                    </span>
+                  </li>
                 ))}
               </ul>
             </div>
