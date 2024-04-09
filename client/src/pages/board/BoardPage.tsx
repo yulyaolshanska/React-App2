@@ -1,10 +1,12 @@
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
+import HistorySidebar from "../../components/boardHistory/BoardHistory";
 import AddButton from "../../components/buttons/addButton/AddButton";
 import TaskLists from "../../components/taskList/TaskList";
 import { TaskList } from "../../interfaces/ TaskList.interface";
 import { RootState, useAppDispatch } from "../../redux/store";
+import { fetchBoardHistory } from "../../redux/taskHistory/taskHistoryAsyncThunk";
 import {
   addTaskList,
   getTaskListsByBoardId,
@@ -29,6 +31,7 @@ const BoardPage: React.FC = () => {
       try {
         if (id) {
           await dispatch(getTaskListsByBoardId(+id));
+          await dispatch(fetchBoardHistory(+id));
         }
         await dispatch(fetchTasks());
       } catch (error) {
@@ -66,7 +69,10 @@ const BoardPage: React.FC = () => {
                 All Boards
               </h2>
             </Link>
-            <AddButton onClick={handleAddNewList} text="+ Create new list" />
+            <div className="flex ml-auto">
+              <HistorySidebar />
+              <AddButton onClick={handleAddNewList} text="+ Create new list" />
+            </div>
           </div>
           <h1 className="text-xl text-center mb-5">
             {taskLists[0]?.board?.title}
