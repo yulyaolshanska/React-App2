@@ -4,8 +4,9 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { TaskBoard } from './entities/task-board.entity';
 import { CreateTaskBoardDto } from './dto/create-task-board.dto';
 import { UpdateTaskBoardDto } from './dto/update-task-board.dto';
-import { TaskList } from "../task-list/entities/task-list.entity";
+import { TaskList } from '../task-list/entities/task-list.entity';
 import { TaskListService } from '../task-list/task-list.service';
+import { TaskHistory } from 'src/task-history/entities/task-history.entity';
 
 @Injectable()
 export class TaskBoardService {
@@ -15,6 +16,8 @@ export class TaskBoardService {
     @InjectRepository(TaskList)
     private taskListRepository: Repository<TaskList>,
     private readonly taskListService: TaskListService,
+    @InjectRepository(TaskHistory)
+    private readonly taskHistoryRepository: Repository<TaskHistory>,
   ) {}
   async create(createTaskBoardDto: CreateTaskBoardDto) {
     const newBoard = this.taskBoardRepository.create({ ...createTaskBoardDto });
@@ -74,6 +77,9 @@ export class TaskBoardService {
         await this.taskListService.removeTaskList(taskList.id);
       }
     }
+
+    await this.taskHistoryRepository.delete({ board: { id } });
+
     await this.taskBoardRepository.delete(id);
 
     return { message: `Task Board with id ${id} deleted` };

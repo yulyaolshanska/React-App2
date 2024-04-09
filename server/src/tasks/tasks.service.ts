@@ -75,6 +75,7 @@ export class TaskService {
 
     const column = await this.taskListRepository.findOne({
       where: { id: updateTaskDto.columnId },
+      relations: ['board'],
     });
 
     if (!column) {
@@ -87,6 +88,7 @@ export class TaskService {
       column,
       taskHistory: taskHistory,
     };
+
     const updatedTask = await this.taskRepository.save(newTask);
 
     if (oldDescription !== updatedTask.description) {
@@ -94,6 +96,7 @@ export class TaskService {
         updatedTask.id,
         'username',
         updatedTask.description,
+        column.board.id,
       );
     }
 
@@ -102,6 +105,7 @@ export class TaskService {
         updatedTask.id,
         'username',
         updatedTask.title,
+        column.board.id,
       );
     }
 
@@ -113,6 +117,7 @@ export class TaskService {
         updatedTask.id,
         'username',
         taskList.title,
+        column.board.id,
       );
     }
 
@@ -123,6 +128,7 @@ export class TaskService {
         updatedTask.id,
         'username',
         new Date(updatedTask.due_date),
+        column.board.id,
       );
     }
 
@@ -132,6 +138,7 @@ export class TaskService {
         updatedTask.id,
         'username',
         newPriority,
+        column.board.id,
       );
     }
 
