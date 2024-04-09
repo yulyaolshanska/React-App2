@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { TaskBoard } from 'src/task-board/entities/task-board.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -26,8 +27,17 @@ export class TaskHistory {
   @ApiProperty()
   created_at: Date;
 
+  @ApiProperty({ example: '1', description: 'Board id' })
+  @Column()
+  boardId: number;
+
   @ManyToOne(() => Task)
   @ApiProperty()
   @JoinColumn({ name: 'task_id' })
   task: Task;
+
+  @ManyToOne(() => TaskBoard, (board) => board.boardHistory, {
+    onDelete: 'CASCADE',
+  })
+  board: TaskBoard;
 }

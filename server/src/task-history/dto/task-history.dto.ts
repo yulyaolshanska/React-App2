@@ -12,4 +12,8 @@ export class TaskHistoryDto {
 
   @ApiProperty({ nullable: true })
   task_id: number;
+
+  @ApiProperty({ nullable: true })
+  boardId: number;
+
 }
