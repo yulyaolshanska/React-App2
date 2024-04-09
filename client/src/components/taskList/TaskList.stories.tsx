@@ -1,10 +1,9 @@
 import { Meta, StoryObj } from "@storybook/react";
-import { Priority } from "../../interfaces/Task";
 import TaskList from "./TaskList";
 import { StoryFn } from "@storybook/react";
 import { Provider } from "react-redux";
 import store from "../../redux/store";
-import { task, columns, tasksArray } from "../../stories/mockData";
+import { columns, tasksArray } from "../../stories/mockData";
 
 const meta: Meta<typeof TaskList> = {
   title: "Components/TaskList",
@@ -64,17 +63,3 @@ export const TaskListError: Story = {
     error: "Error in task list",
   },
 };
-
-// export const MediumPriority: Story = {
-//   args: {
-//     task: { ...task, priority: Priority.MEDIUM },
-//     columns,
-//   },
-// };
-
-// export const LowPriority: Story = {
-//   args: {
-//     task: { ...task, priority: Priority.LOW },
-//     columns,
-//   },
-// };
