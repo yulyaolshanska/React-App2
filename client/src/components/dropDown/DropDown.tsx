@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from "react";
-import styles from "./DropDown.module.scss";
 
 export interface DropDownProps {
   onAddClick?: () => void;
@@ -66,16 +65,20 @@ const DropDown: React.FC<DropDownProps> = ({
   }, [isShowListMenu]);
 
   return (
-    <div ref={menuRef} className={styles.menuContainer}>
-      <button type="button" onClick={handleShowMenu} className={styles.menuBtn}>
+    <div ref={menuRef} className="absolute top-0 right-1">
+      <button
+        type="button"
+        onClick={handleShowMenu}
+        className="flex items-center gap-8 w-[20px] h-[30px] font-semibold"
+      >
         ...
       </button>
       {isShowListMenu && (
-        <div className={styles.listMenu}>
+        <div className="flex flex-col absolute left-0 top-full w-[160px] z-40 bg-white border-solid border-1 border-gray-400 rounded-md">
           <button
             type="button"
             onClick={() => handleEdit()}
-            className={styles.listMenuItem}
+            className="text-base leading-normal w-full text-left px-6 py-2"
           >
             Edit
           </button>
@@ -83,7 +86,7 @@ const DropDown: React.FC<DropDownProps> = ({
             <button
               type="button"
               onClick={() => handleAddCart()}
-              className={styles.listMenuItem}
+              className="text-base leading-normal w-full text-left px-6 py-2"
             >
               Add new card
             </button>
@@ -91,7 +94,7 @@ const DropDown: React.FC<DropDownProps> = ({
           <button
             type="button"
             onClick={() => handleDelete()}
-            className={styles.listMenuItem}
+            className="text-base leading-normal w-full text-left px-6 py-2"
           >
             Delete
           </button>
