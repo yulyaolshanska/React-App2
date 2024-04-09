@@ -54,7 +54,7 @@ export class TaskBoardService {
         updateTaskBoardDto.title !== undefined &&
         updateTaskBoardDto.title !== board.title
       ) {
-        const updatedBoard = { ...board, updateTaskBoardDto };
+        const updatedBoard = { ...board, ...updateTaskBoardDto };
 
         return await this.taskBoardRepository.save(updatedBoard);
       } else {

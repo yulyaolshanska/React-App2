@@ -1,4 +1,8 @@
-import { PartialType } from '@nestjs/swagger';
-import { CreateTaskBoardDto } from './create-task-board.dto';
+import { ApiProperty } from '@nestjs/swagger';
+import { Column } from 'typeorm';
 
-export class UpdateTaskBoardDto extends PartialType(CreateTaskBoardDto) {}
+export class UpdateTaskBoardDto {
+  @Column()
+  @ApiProperty()
+  title: string;
+}
