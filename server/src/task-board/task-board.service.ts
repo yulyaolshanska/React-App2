@@ -6,7 +6,7 @@ import { CreateTaskBoardDto } from './dto/create-task-board.dto';
 import { UpdateTaskBoardDto } from './dto/update-task-board.dto';
 import { TaskList } from '../task-list/entities/task-list.entity';
 import { TaskListService } from '../task-list/task-list.service';
-import { TaskHistory } from 'src/task-history/entities/task-history.entity';
+import { TaskHistory } from '../task-history/entities/task-history.entity';
 
 @Injectable()
 export class TaskBoardService {

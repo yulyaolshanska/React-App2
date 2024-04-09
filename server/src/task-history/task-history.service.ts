@@ -4,7 +4,7 @@ import { Task } from '../tasks/entities/task.entity';
 import { Repository } from 'typeorm';
 import { TaskHistoryDto } from './dto/task-history.dto';
 import { TaskHistory } from './entities/task-history.entity';
-import { TaskBoard } from 'src/task-board/entities/task-board.entity';
+import { TaskBoard } from '../task-board/entities/task-board.entity';
 
 @Injectable()
 export class TaskHistoryService {
@@ -41,7 +41,6 @@ export class TaskHistoryService {
   }
 
   async findBoardHistory(boardId: number) {
-   
     return await this.taskHistoryRepository.find({
       where: {
         board: { id: boardId },
