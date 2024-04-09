@@ -1,7 +1,6 @@
 import { Meta, StoryObj } from "@storybook/react";
 import DropDown from "./DropDown";
 import { fn } from "@storybook/test";
-import { Default } from "../taskCard/TaskCard.stories";
 
 const meta: Meta<typeof DropDown> = {
   title: "Components/DropDown",
