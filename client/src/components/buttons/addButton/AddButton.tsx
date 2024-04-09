@@ -7,7 +7,7 @@ const AddButton: React.FC<AddButtonProps> = ({ onClick, text }) => {
   return (
     <button
       onClick={onClick}
-      className="ml-auto flex border-solid border-1 border-cyan-600 rounded-lg p-2 text-lg font-semibold bg-white  text-black hover:bg-[#66aee1] hover:text-white"
+      className="ml-auto mr-2 flex border-solid border-1 border-cyan-600 rounded-lg p-2 text-lg font-semibold bg-white  text-black hover:bg-[#66aee1] hover:text-white"
     >
       {text}
     </button>

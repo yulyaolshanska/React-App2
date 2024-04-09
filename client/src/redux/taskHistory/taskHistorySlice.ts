@@ -1,21 +1,24 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { BoardHistory } from "../../interfaces/BoardHistory.interface";
 import { TaskHistory } from "../../interfaces/TaskHistory.interface";
-import { fetchTaskHistory } from "./taskHistoryAsyncThunk";
+import { fetchTaskHistory, fetchBoardHistory } from "./taskHistoryAsyncThunk";
 
-interface TaskHistoryState {
+interface HistoryState {
   taskHistory: TaskHistory[];
   loading: boolean;
   error: string | null;
+  boardHistory: BoardHistory[];
 }
 
-const initialState: TaskHistoryState = {
+const initialState: HistoryState = {
   taskHistory: [],
   loading: false,
   error: null,
+  boardHistory: [],
 };
 
-const taskHistorySlice = createSlice({
-  name: "taskHistory",
+const historySlice = createSlice({
+  name: "history",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
@@ -31,9 +34,21 @@ const taskHistorySlice = createSlice({
       .addCase(fetchTaskHistory.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message ?? "An error occurred";
+      })
+      .addCase(fetchBoardHistory.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchBoardHistory.fulfilled, (state, action) => {
+        state.loading = false;
+        state.boardHistory = action.payload;
+      })
+      .addCase(fetchBoardHistory.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message ?? "An error occurred";
       });
   },
 });
 
-export const taskHistoryActions = taskHistorySlice.actions;
-export const taskHistoryReducer = taskHistorySlice.reducer;
+export const historyActions = historySlice.actions;
+export const historyReducer = historySlice.reducer;
