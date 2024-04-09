@@ -43,7 +43,10 @@ const BoardPage: React.FC = () => {
   }, [dispatch]);
 
   const handleAddNewList = () => {
-    const maxId = Math.max(...taskLists.map((list) => list.id), 0);
+    let maxId = 0;
+    if (taskLists.length > 0) {
+      maxId = Math.max(...taskLists.map((list) => list.id), 0);
+    }
     const newId = maxId + 1;
     const newTaskList: TaskList = {
       id: newId,

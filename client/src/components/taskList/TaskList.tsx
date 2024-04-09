@@ -155,7 +155,7 @@ const TaskLists: React.FC<TaskListProps> = ({
                       isOpen={isOpenAddModal}
                     />
                   )}
-                  {tasks &&
+                  {tasks.length > 0 &&
                     tasks
                       .filter((t: Task) => t?.column?.id === id)
                       .sort(

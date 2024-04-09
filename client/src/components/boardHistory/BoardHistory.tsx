@@ -78,14 +78,15 @@ const HistorySidebar = () => {
               </div>
 
               <ul className="bg-white flex flex-col gap-6 pt-12 px-4 overflow-y-auto max-h-[93vh] h-screen">
-                {boardHistory.map((history) => (
-                  <li className="flex list-disc mb-3 ml-3" key={history.id}>
-                    <p>{history.action}</p>
-                    <span className=" ml-auto">
-                      {formatDateWithTime(history.created_at)}
-                    </span>
-                  </li>
-                ))}
+                {boardHistory.length > 0 &&
+                  boardHistory.map((history) => (
+                    <li className="flex list-disc mb-3 ml-3" key={history.id}>
+                      <p>{history.action}</p>
+                      <span className=" ml-auto">
+                        {formatDateWithTime(history.created_at)}
+                      </span>
+                    </li>
+                  ))}
               </ul>
             </div>
           </motion.div>

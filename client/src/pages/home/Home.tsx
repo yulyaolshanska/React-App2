@@ -37,7 +37,10 @@ const HomePage: React.FC = () => {
   };
 
   const handleAddNewBoard = () => {
-    const maxId = Math.max(...boards.map((board) => board.id), 0);
+    let maxId = 0;
+    if (boards.length > 0) {
+      maxId = Math.max(...boards.map((board) => board.id), 0);
+    }
     const newId = maxId + 1;
     const newTaskBoard: TaskBoard = {
       id: newId,
