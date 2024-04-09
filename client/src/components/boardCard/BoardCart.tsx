@@ -1,3 +1,4 @@
+import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { TaskBoard } from "../../interfaces/TaskBoard.interface";
 import { useAppDispatch } from "../../redux/store";
@@ -10,11 +11,13 @@ interface BoardCardProps {
 
 const BoardCard: React.FC<BoardCardProps> = ({ board, children }) => {
   const dispatch = useAppDispatch();
+  const editTitleRef = useRef<HTMLInputElement>(null);
+  const [activeTitleInput, setActiveTitleInput] = useState<number | null>(null);
 
   const handleBoardTitleSave = (id: number, newTitle: string): void => {
     if (newTitle) {
       dispatch(updateTaskBoard({ id, newTitle }));
-      //  setActiveTitleInput(null);
+      setActiveTitleInput(null);
     }
   };
 
@@ -24,6 +27,9 @@ const BoardCard: React.FC<BoardCardProps> = ({ board, children }) => {
     >
       <div className="mb-5">
         <EditableTitle
+          ref={editTitleRef}
+          isActive={activeTitleInput === board.id}
+          handleClick={() => setActiveTitleInput(board.id)}
           onSave={handleBoardTitleSave}
           id={board.id}
           initialValue={board.title}
